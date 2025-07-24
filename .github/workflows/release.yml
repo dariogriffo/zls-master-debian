@@ -1,10 +1,14 @@
-name: Build zig master for Debian
+name: Build zls master for Debian
 
 on:
   workflow_dispatch:
     inputs:
       zig_version:
-        description: The version of zig to build.
+        description: The version of zig used to build.
+        type: string
+        required: true
+      zls_version:
+        description: The version of zls to build.
         type: string
         required: true
       build_version:
@@ -16,28 +20,28 @@ permissions:
   contents: write
 
 jobs:
-  build-zig:
+  build-zls:
     name: Build
     runs-on: ubuntu-latest    
     steps:
-      - name: Checkout zig-debian
+      - name: Checkout zls-debian
         uses: actions/checkout@v4
 
       - name: Build zig
-        run: ./build_zig_debian.sh ${{ inputs.zig_version }} ${{ inputs.build_version }}
+        run: ./build_zls_debian.sh ${{ inputs.zig_version }} ${{ inputs.build_version }} ${{ inputs.zls_version }}
       
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: artifact
-          path: zig-master_*.deb
+          path: zls-master_*.deb
 
 
   release-zig:
     name: (Draft-)Release zig for Debian
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: build-zig
+    needs: build-zls
     steps:
       - name: Download All Artifacts
         uses: actions/download-artifact@v4
@@ -48,7 +52,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           draft: true
-          files: zig-master_*.deb
+          files: zls-master_*.deb
           name: ${{ inputs.zig_version }}+${{ inputs.build_version }}
           tag_name: ${{ env.RELEASE_TAG }}
           fail_on_unmatched_files: true
