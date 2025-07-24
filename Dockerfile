@@ -7,11 +7,11 @@ ARG DEBIAN_DIST
 ARG BUILD_VERSION
 ARG FULL_VERSION
 
-RUN apt update && apt install -y curl gpg
+RUN apt update && apt install -y git curl gpg
 RUN curl -sS https://debian.griffo.io/EA0F721D231FDD3A0A17B9AC7808B4DD62C41256.asc | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/debian.griffo.io.gpg
 RUN echo "deb https://debian.griffo.io/apt $DEBIAN_DIST main" | tee /etc/apt/sources.list.d/debian.griffo.io.list
     
-RUN apt update && apt install -y zig-master git
+RUN apt update && apt install -y zig-master
 RUN git clone https://github.com/zigtools/zls
 RUN mkdir -p /opt/zls/$ZIG_VERSION
 RUN cd zls && git checkout $ZLS_VERSION && zig build --prefix /opt/zls/$ZIG_VERSION -Doptimize=ReleaseSafe
@@ -53,4 +53,4 @@ RUN sed -i "s/DIST/$DEBIAN_DIST/" /output/DEBIAN/postrm
 RUN sed -i "s/BUILD_VERSION/$BUILD_VERSION/" /output/DEBIAN/postrm
 RUN sed -i "s/ZIG_VERSION/$ZIG_VERSION/" /output/DEBIAN/postrm
 
-RUN dpkg-deb --build /output /zls-zero_${FULL_VERSION}.deb
+RUN dpkg-deb --build /output /zls-master_${FULL_VERSION}.deb
