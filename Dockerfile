@@ -16,8 +16,8 @@ RUN git clone https://github.com/zigtools/zls
 RUN mkdir -p /opt/zls/$ZIG_VERSION
 RUN cd zls && git checkout $ZLS_VERSION && zig build --prefix /opt/zls/$ZIG_VERSION -Doptimize=ReleaseSafe
 
-RUN mkdir -p /output/usr/lib/zls/$ZIG_VERSION
-RUN cp "/opt/zls/$ZIG_VERSION/bin/zls" /output/usr/lib/zls/$ZIG_VERSION/
+RUN mkdir -p /output/usr/lib/zls/master
+RUN cp "/opt/zls/$ZIG_VERSION/bin/zls" /output/usr/lib/zls/master/
 
 RUN mkdir -p /output/DEBIAN
 RUN mkdir -p /output/usr/share/doc/zls/
