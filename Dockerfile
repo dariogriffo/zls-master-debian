@@ -20,7 +20,7 @@ RUN mkdir -p /output/usr/lib/zls/master
 RUN cp "/opt/zls/$ZIG_VERSION/bin/zls" /output/usr/lib/zls/master/
 
 RUN mkdir -p /output/DEBIAN
-RUN mkdir -p /output/usr/share/doc/zls/
+RUN mkdir -p /output/usr/share/doc/zls-master/
 
 COPY output/DEBIAN/control /output/DEBIAN/
 COPY output/DEBIAN/postinst /output/DEBIAN/
@@ -30,12 +30,12 @@ RUN chmod 755 /output/DEBIAN/postinst
 RUN chmod 755 /output/DEBIAN/prerm
 RUN chmod 755 /output/DEBIAN/postrm
 
-COPY output/changelog.Debian /output/usr/share/doc/zls/changelog.Debian
-COPY output/copyright /output/usr/share/doc/zls/
+COPY output/changelog.Debian /output/usr/share/doc/zls-master/changelog.Debian
+COPY output/copyright /output/usr/share/doc/zls-master/
 
-RUN sed -i "s/DIST/$DEBIAN_DIST/" /output/usr/share/doc/zls/changelog.Debian
-RUN sed -i "s/BUILD_VERSION/$BUILD_VERSION/" /output/usr/share/doc/zls/changelog.Debian
-RUN sed -i "s/ZIG_VERSION/$ZIG_VERSION/" /output/usr/share/doc/zls/changelog.Debian
+RUN sed -i "s/DIST/$DEBIAN_DIST/" /output/usr/share/doc/zls-master/changelog.Debian
+RUN sed -i "s/BUILD_VERSION/$BUILD_VERSION/" /output/usr/share/doc/zls-master/changelog.Debian
+RUN sed -i "s/ZIG_VERSION/$ZIG_VERSION/" /output/usr/share/doc/zls-master/changelog.Debian
 
 RUN sed -i "s/DIST/$DEBIAN_DIST/" /output/DEBIAN/control
 RUN sed -i "s/BUILD_VERSION/$BUILD_VERSION/" /output/DEBIAN/control
