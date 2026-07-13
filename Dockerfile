@@ -8,8 +8,8 @@ ARG BUILD_VERSION
 ARG FULL_VERSION
 
 RUN apt update && apt install -y git curl gpg
-RUN curl -sS https://debian.griffo.io/EA0F721D231FDD3A0A17B9AC7808B4DD62C41256.asc | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/debian.griffo.io.gpg
-RUN echo "deb https://debian.griffo.io/apt $DEBIAN_DIST main" | tee /etc/apt/sources.list.d/debian.griffo.io.list
+RUN curl -sS https://deb.griffo.io/EA0F721D231FDD3A0A17B9AC7808B4DD62C41256.asc | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/deb.griffo.io.gpg
+RUN echo "deb https://deb.griffo.io/apt $DEBIAN_DIST main" | tee /etc/apt/sources.list.d/deb.griffo.io.list
     
 RUN apt update && apt install -y zig-master
 RUN git clone https://github.com/zigtools/zls
